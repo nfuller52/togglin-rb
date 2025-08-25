@@ -1,0 +1,39 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: togglin_development
+  host: localhost
+  user: postgres
+  password: postgres
+  port: 5101
+
+test:
+  <<: *default
+  database: togglin_test
+  host: localhost
+  user: postgres
+  password: postgres
+  port: 5101
+
+production:
+  primary: &primary_production
+    <<: *default
+    database: togglin_production
+    username: togglin
+    password: <%= ENV["TOGGLIN_DATABASE_PASSWORD"] %>
+  cache:
+    <<: *primary_production
+    database: togglin_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: togglin_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: togglin_production_cable
+    migrations_paths: db/cable_migrate
