@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 # gem "bcrypt", "~> 3.1.7"
@@ -14,10 +16,16 @@ gem "thruster", require: false
 gem "vite_rails"
 
 group :development, :test do
-  gem "brakeman", require: false
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "bullet"
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
+  gem "rails_best_practices"
+  gem "reek"
+  gem "rspec-rails", "~> 8.0"
+  gem "rubocop-rails-omakase", require: false
+  gem "rubocop-rspec", require: false
 end
 
 group :development do
+  gem "annotaterb"
   gem "web-console"
 end

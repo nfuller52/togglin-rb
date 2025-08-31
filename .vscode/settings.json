@@ -1,0 +1,13 @@
+{
+  "[ruby]": {
+    "editor.defaultFormatter": "rubocop.vscode-rubocop",
+    "editor.formatOnSave": true
+  },
+  "rubocop.autocorrect": true,
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#ac1a1a",
+    "titleBar.activeForeground": "#FFFFFF",
+    "titleBar.inactiveBackground": "#ac1a1a",
+    "titleBar.inactiveForeground": "#FFFFFF"
+  }
+}

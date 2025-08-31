@@ -1,3 +1,26 @@
+# frozen_string_literal: true
+
+# == Schema Information
+#
+# Table name: labels
+#
+#  id              :uuid             not null, primary key
+#  color           :text             not null
+#  description     :text
+#  name            :text             not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  organization_id :uuid             not null
+#
+# Indexes
+#
+#  index_labels_on_organization_id           (organization_id)
+#  index_labels_on_organization_id_and_name  (organization_id,name) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id) ON DELETE => cascade
+#
 class Label < ApplicationRecord
   belongs_to :organization
 
@@ -5,5 +28,9 @@ class Label < ApplicationRecord
   has_many :members, through: :label_memberships, source: :member
 
   validates :name, presence: true, uniqueness: { scope: :organization_id }
-  validates :color, presence: true, format: { with: /\A#(?:\h{3}|\h{6})\z/, message: "must be a valid hex color code" }
+  validates :color, presence: true,
+                    format: {
+                      with: /\A#(?:\h{3}|\h{6})\z/,
+                      message: "must be a valid hex color code"
+                    }
 end
