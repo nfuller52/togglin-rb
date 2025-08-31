@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_25_135451) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -44,6 +44,39 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_135451) do
     t.index ["default_flag_set_id"], name: "index_applications_on_default_flag_set_id"
     t.index ["organization_id", "key"], name: "index_applications_on_organization_id_and_key", unique: true
     t.index ["organization_id"], name: "index_applications_on_organization_id"
+  end
+
+  create_table "context_key_policies", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.text "algorithm", default: "sha256", null: false
+    t.text "salt", null: false
+    t.boolean "is_deterministic", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_context_key_policies_on_organization_id"
+  end
+
+  create_table "context_kinds", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.text "key", null: false
+    t.text "description"
+    t.boolean "is_allowed_in_client_bundles", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id", "key"], name: "index_context_kinds_on_organization_id_and_key", unique: true
+    t.index ["organization_id"], name: "index_context_kinds_on_organization_id"
+  end
+
+  create_table "context_schemas", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "context_kind_id", null: false
+    t.integer "version"
+    t.jsonb "spec"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["context_kind_id"], name: "index_context_schemas_on_context_kind_id"
+    t.index ["organization_id", "context_kind_id", "version"], name: "idx_on_organization_id_context_kind_id_version_b7c80e9551", unique: true
+    t.index ["organization_id"], name: "index_context_schemas_on_organization_id"
   end
 
   create_table "environments", force: :cascade do |t|
@@ -178,11 +211,37 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_135451) do
     t.index ["slug"], name: "index_organizations_on_slug", unique: true
   end
 
+  create_table "segment_memberships", force: :cascade do |t|
+    t.bigint "segment_id", null: false
+    t.text "stable_context_key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["segment_id", "stable_context_key"], name: "index_segment_memberships_on_segment_id_and_stable_context_key", unique: true
+    t.index ["segment_id"], name: "index_segment_memberships_on_segment_id"
+  end
+
+  create_table "segments", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "context_kind_id", null: false
+    t.text "name", null: false
+    t.text "key", null: false
+    t.jsonb "rule", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["context_kind_id"], name: "index_segments_on_context_kind_id"
+    t.index ["organization_id", "key"], name: "index_segments_on_organization_id_and_key", unique: true
+    t.index ["organization_id"], name: "index_segments_on_organization_id"
+  end
+
   add_foreign_key "application_sdk_keys", "applications", on_delete: :cascade
   add_foreign_key "application_sdk_keys", "environments", on_delete: :restrict
   add_foreign_key "application_sdk_keys", "organizations", on_delete: :cascade
   add_foreign_key "applications", "flag_sets", column: "default_flag_set_id", on_delete: :nullify
   add_foreign_key "applications", "organizations", on_delete: :restrict
+  add_foreign_key "context_key_policies", "organizations", on_delete: :cascade
+  add_foreign_key "context_kinds", "organizations", on_delete: :cascade
+  add_foreign_key "context_schemas", "context_kinds", on_delete: :cascade
+  add_foreign_key "context_schemas", "organizations", on_delete: :cascade
   add_foreign_key "environments", "organizations", on_delete: :restrict
   add_foreign_key "flag_bundles", "environments", on_delete: :restrict
   add_foreign_key "flag_bundles", "flag_sets", on_delete: :restrict
@@ -202,4 +261,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_135451) do
   add_foreign_key "flags", "organizations", on_delete: :restrict
   add_foreign_key "label_memberships", "labels", on_delete: :cascade
   add_foreign_key "labels", "organizations", on_delete: :cascade
+  add_foreign_key "segment_memberships", "segments", on_delete: :cascade
+  add_foreign_key "segments", "context_kinds", on_delete: :restrict
+  add_foreign_key "segments", "organizations", on_delete: :cascade
 end
