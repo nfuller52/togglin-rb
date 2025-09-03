@@ -8,6 +8,8 @@ class CreateContextSchemas < ActiveRecord::Migration[8.0]
       t.integer :version
       t.jsonb :spec
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
 
     add_index :context_schemas, %i[organization_id context_kind_id version], unique: true

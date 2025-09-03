@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+COOKIE_JAR="cookies.txt"
+CSRF=$(grep X-CSRF-Token  "$COOKIE_JAR" 2>/dev/null | tail -n1 | awk '{print $7}')
+
+curl -s -c "$COOKIE_JAR" -b "$COOKIE_JAR" http://localhost:3000 \
+  ${CSRF:+ -H "X-CSRF-Token: $CSRF"} \
+  "$@"

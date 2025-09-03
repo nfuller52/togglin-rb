@@ -15,6 +15,8 @@ class CreateFlagBundles < ActiveRecord::Migration[8.0]
       t.integer :version, null: false
       t.jsonb :bundle, null: false
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
 
     add_index :flag_bundles, 'organization_id, environment_id, flag_set_id, version DESC',

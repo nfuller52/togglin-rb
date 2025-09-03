@@ -4,12 +4,16 @@
 #
 # Table name: flag_dependencies
 #
+#  deleted_at      :datetime
 #  edge_kind       :enum             not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  child_flag_id   :uuid             not null, primary key
+#  created_by_id   :uuid             not null
+#  deleted_by_id   :uuid
 #  organization_id :uuid             not null, primary key
 #  parent_flag_id  :uuid             not null, primary key
+#  updated_by_id   :uuid             not null
 #
 # Indexes
 #
@@ -20,8 +24,11 @@
 # Foreign Keys
 #
 #  fk_rails_...  (child_flag_id => flags.id) ON DELETE => cascade
+#  fk_rails_...  (created_by_id => users.id) ON DELETE => restrict
+#  fk_rails_...  (deleted_by_id => users.id) ON DELETE => restrict
 #  fk_rails_...  (organization_id => organizations.id) ON DELETE => cascade
 #  fk_rails_...  (parent_flag_id => flags.id) ON DELETE => cascade
+#  fk_rails_...  (updated_by_id => users.id) ON DELETE => restrict
 #
 class FlagDependency < ApplicationRecord
   belongs_to :organization

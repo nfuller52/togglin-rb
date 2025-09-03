@@ -10,6 +10,8 @@ class CreateFlagSets < ActiveRecord::Migration[8.0]
       t.text :key, null: false
       t.column :purpose, :enum_flag_set_purpose, null: false
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
 
     add_index :flag_sets, %i[organization_id key], unique: true

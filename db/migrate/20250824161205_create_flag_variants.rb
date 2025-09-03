@@ -8,6 +8,8 @@ class CreateFlagVariants < ActiveRecord::Migration[8.0]
       t.text :name, null: false
       t.integer :weight
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
 
     add_check_constraint :flag_variants, 'weight IS NULL OR weight BETWEEN 0 AND 100000',

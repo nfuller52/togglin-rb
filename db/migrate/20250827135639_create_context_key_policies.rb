@@ -8,6 +8,8 @@ class CreateContextKeyPolicies < ActiveRecord::Migration[8.0]
       t.text :salt, null: false
       t.boolean :is_deterministic, null: false, default: true
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
   end
 end

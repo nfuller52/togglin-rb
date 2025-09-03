@@ -10,6 +10,8 @@ class CreateFlagEnvironmentStates < ActiveRecord::Migration[8.0]
       t.text :default_variant_name
       t.jsonb :rule_plan
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
 
     add_index :flag_environment_states, %i[flag_id environment_id], unique: true

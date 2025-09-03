@@ -40,5 +40,7 @@ module Togglin
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.forgery_protection_origin_check = true
   end
 end

@@ -7,6 +7,8 @@ class CreateEnvironments < ActiveRecord::Migration[8.0]
                                   foreign_key: { on_delete: :restrict }, index: true
       t.text :name, null: false
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
 
     add_index :environments, %i[organization_id name], unique: true

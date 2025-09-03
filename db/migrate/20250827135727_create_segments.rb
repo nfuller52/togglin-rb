@@ -9,6 +9,8 @@ class CreateSegments < ActiveRecord::Migration[8.0]
       t.text :key, null: false
       t.jsonb :rule, null: false, default: {}
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
 
     add_index :segments, %i[organization_id key], unique: true

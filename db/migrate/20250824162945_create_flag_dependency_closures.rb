@@ -14,6 +14,8 @@ class CreateFlagDependencyClosures < ActiveRecord::Migration[8.0]
                                      index: true
       t.integer :depth, null: false
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
 
     add_check_constraint :flag_dependency_closures, 'depth >= 1',

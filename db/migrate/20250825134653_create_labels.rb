@@ -9,6 +9,7 @@ class CreateLabels < ActiveRecord::Migration[8.0]
       t.text :description
       t.text :color, null: false
       t.timestamps
+      t.trackables
     end
 
     add_index :labels, %i[organization_id name], unique: true

@@ -12,6 +12,8 @@ class CreateFlags < ActiveRecord::Migration[8.0]
       t.text :description
       t.column :kind, :enum_flag_kinds, null: false
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
 
     add_index :flags, %i[organization_id key], unique: true

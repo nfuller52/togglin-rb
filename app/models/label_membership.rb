@@ -4,9 +4,10 @@
 #
 # Table name: label_memberships
 #
-#  member_type :string           not null
-#  label_id    :uuid             not null, primary key
-#  member_id   :uuid             not null, primary key
+#  member_type   :string           not null
+#  created_by_id :uuid             not null
+#  label_id      :uuid             not null, primary key
+#  member_id     :uuid             not null, primary key
 #
 # Indexes
 #
@@ -17,6 +18,7 @@
 #
 # Foreign Keys
 #
+#  fk_rails_...  (created_by_id => users.id) ON DELETE => restrict
 #  fk_rails_...  (label_id => labels.id) ON DELETE => cascade
 #
 class LabelMembership < ApplicationRecord

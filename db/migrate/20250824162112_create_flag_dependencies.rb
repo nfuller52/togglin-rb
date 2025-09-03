@@ -16,6 +16,8 @@ class CreateFlagDependencies < ActiveRecord::Migration[8.0]
                                 index: true
       t.column :edge_kind, :enum_flag_dependency_edge_kinds, null: false
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
   end
 end

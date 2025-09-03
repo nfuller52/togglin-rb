@@ -7,7 +7,7 @@ plugins:
 # Application Cops
 Layout/LineLength:
   Enabled: true
-  Max: 98
+  Max: 118
   AllowedPatterns: ['^(\s*#)', '.*\s+#']
 
 Layout/ArgumentAlignment:

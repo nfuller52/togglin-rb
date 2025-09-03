@@ -9,6 +9,7 @@ class CreateApplicationSdkKeys < ActiveRecord::Migration[8.0]
       t.text :key, null: false
       t.boolean :is_active, null: false, default: true
       t.timestamps
+      t.trackables
     end
   end
 end

@@ -4,8 +4,9 @@
 #
 # Table name: flag_set_flags
 #
-#  flag_id     :uuid             not null, primary key
-#  flag_set_id :uuid             not null, primary key
+#  created_by_id :uuid             not null
+#  flag_id       :uuid             not null, primary key
+#  flag_set_id   :uuid             not null, primary key
 #
 # Indexes
 #
@@ -14,6 +15,7 @@
 #
 # Foreign Keys
 #
+#  fk_rails_...  (created_by_id => users.id) ON DELETE => restrict
 #  fk_rails_...  (flag_id => flags.id) ON DELETE => cascade
 #  fk_rails_...  (flag_set_id => flag_sets.id) ON DELETE => cascade
 #

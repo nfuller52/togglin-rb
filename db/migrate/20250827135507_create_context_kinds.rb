@@ -8,6 +8,8 @@ class CreateContextKinds < ActiveRecord::Migration[8.0]
       t.text :description
       t.boolean :is_allowed_in_client_bundles, null: false, default: true
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
 
     add_index :context_kinds, %i[organization_id key], unique: true

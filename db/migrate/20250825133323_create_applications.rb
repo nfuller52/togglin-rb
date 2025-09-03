@@ -10,6 +10,8 @@ class CreateApplications < ActiveRecord::Migration[8.0]
       t.text :key, null: false
       t.text :description
       t.timestamps
+      t.trackables
+      t.soft_delete
     end
 
     add_index :applications, %i[organization_id key], unique: true

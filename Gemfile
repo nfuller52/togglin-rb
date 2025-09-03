@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "kamal", require: false
 gem "name_of_person"
