@@ -11,6 +11,7 @@
 #  updated_at      :datetime         not null
 #  application_id  :uuid             not null
 #  created_by_id   :uuid             not null
+#  deleted_by_id   :uuid
 #  environment_id  :uuid             not null
 #  organization_id :uuid             not null
 #  updated_by_id   :uuid             not null
@@ -25,6 +26,7 @@
 #
 #  fk_rails_...  (application_id => applications.id) ON DELETE => cascade
 #  fk_rails_...  (created_by_id => users.id) ON DELETE => restrict
+#  fk_rails_...  (deleted_by_id => users.id) ON DELETE => restrict
 #  fk_rails_...  (environment_id => environments.id) ON DELETE => restrict
 #  fk_rails_...  (organization_id => organizations.id) ON DELETE => cascade
 #  fk_rails_...  (updated_by_id => users.id) ON DELETE => restrict

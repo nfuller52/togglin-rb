@@ -1,10 +1,25 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
 
-COOKIE_JAR="cookies.txt"
-CSRF=$(grep X-CSRF-Token  "$COOKIE_JAR" 2>/dev/null | tail -n1 | awk '{print $7}')
+# change if needed:
+BASE_URL="${BASE_URL:-http://localhost:5100}"
+COOKIE_JAR="${COOKIE_JAR:-cookies.txt}"
 
-curl -s -c "$COOKIE_JAR" -b "$COOKIE_JAR" http://localhost:3000 \
-  ${CSRF:+ -H "X-CSRF-Token: $CSRF"} \
-  "$@"
+# keep a cookie jar
+touch "$COOKIE_JAR"
+
+# fetch root page to get CSRF meta tag
+CSRF="$(
+  curl -s -c "$COOKIE_JAR" -b "$COOKIE_JAR" "$BASE_URL/" \
+    | sed -n 's/.*<meta[^>]*name="csrf-token"[^>]*content="\([^"]*\)".*/\1/p' \
+    | head -n1
+)"
+
+# build optional header
+EXTRA=()
+if [[ -n "${CSRF}" ]]; then
+  EXTRA=(-H "X-CSRF-Token: ${CSRF}")
+fi
+
+# run your curl with cookies + csrf header
+exec curl -c "$COOKIE_JAR" -b "$COOKIE_JAR" "${EXTRA[@]}" "$@"

@@ -5,8 +5,6 @@ class CreateUserSessions < ActiveRecord::Migration[8.0]
       t.text :ip_address
       t.text :user_agent
       t.timestamps
-      t.trackables
-      t.soft_delete
     end
   end
 end

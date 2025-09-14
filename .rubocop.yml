@@ -27,3 +27,6 @@ Layout/SpaceInsideArrayLiteralBrackets:
 # RSpec Cops
 RSpec/IncludeExamples:
   Enabled: true
+
+RSpec/ExampleLength:
+  Max: 18

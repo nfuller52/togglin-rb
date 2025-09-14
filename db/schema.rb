@@ -33,6 +33,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
+    t.uuid "deleted_by_id"
     t.index ["application_id"], name: "index_application_sdk_keys_on_application_id"
     t.index ["environment_id"], name: "index_application_sdk_keys_on_environment_id"
     t.index ["organization_id"], name: "index_application_sdk_keys_on_organization_id"
@@ -48,8 +49,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["default_flag_set_id"], name: "index_applications_on_default_flag_set_id"
     t.index ["organization_id", "key"], name: "index_applications_on_organization_id_and_key", unique: true
     t.index ["organization_id"], name: "index_applications_on_organization_id"
@@ -64,8 +65,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["organization_id"], name: "index_context_key_policies_on_organization_id"
   end
 
@@ -78,8 +79,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["organization_id", "key"], name: "index_context_kinds_on_organization_id_and_key", unique: true
     t.index ["organization_id"], name: "index_context_kinds_on_organization_id"
   end
@@ -93,8 +94,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["context_kind_id"], name: "index_context_schemas_on_context_kind_id"
     t.index ["organization_id", "context_kind_id", "version"], name: "idx_on_organization_id_context_kind_id_version_b7c80e9551", unique: true
     t.index ["organization_id"], name: "index_context_schemas_on_organization_id"
@@ -107,8 +108,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["organization_id", "name"], name: "index_environments_on_organization_id_and_name", unique: true
     t.index ["organization_id"], name: "index_environments_on_organization_id"
   end
@@ -123,8 +124,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["environment_id"], name: "index_flag_bundles_on_environment_id"
     t.index ["flag_set_id"], name: "index_flag_bundles_on_flag_set_id"
     t.index ["organization_id", "environment_id", "flag_set_id", "version"], name: "idx_on_organization_id_environment_id_flag_set_id_v_8994316ef9", unique: true, order: { version: :desc }
@@ -140,8 +141,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["child_flag_id"], name: "index_flag_dependencies_on_child_flag_id"
     t.index ["organization_id"], name: "index_flag_dependencies_on_organization_id"
     t.index ["parent_flag_id"], name: "index_flag_dependencies_on_parent_flag_id"
@@ -156,8 +157,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["ancestor_flag_id"], name: "index_flag_dependency_closures_on_ancestor_flag_id"
     t.index ["descendant_flag_id", "ancestor_flag_id"], name: "idx_on_descendant_flag_id_ancestor_flag_id_3928a71b9f"
     t.index ["descendant_flag_id"], name: "index_flag_dependency_closures_on_descendant_flag_id"
@@ -175,8 +176,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["environment_id"], name: "index_flag_environment_states_on_environment_id"
     t.index ["flag_id", "environment_id"], name: "index_flag_environment_states_on_flag_id_and_environment_id", unique: true
     t.index ["flag_id"], name: "index_flag_environment_states_on_flag_id"
@@ -199,8 +200,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["organization_id", "key"], name: "index_flag_sets_on_organization_id_and_key", unique: true
     t.index ["organization_id"], name: "index_flag_sets_on_organization_id"
   end
@@ -213,8 +214,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["flag_id", "name"], name: "index_flag_variants_on_flag_id_and_name", unique: true
     t.index ["flag_id"], name: "index_flag_variants_on_flag_id"
     t.check_constraint "weight IS NULL OR weight >= 0 AND weight <= 100000", name: "check_flag_variant_weight"
@@ -230,8 +231,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["organization_id", "key"], name: "index_flags_on_organization_id_and_key", unique: true
     t.index ["organization_id"], name: "index_flags_on_organization_id"
   end
@@ -256,6 +257,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
+    t.uuid "deleted_by_id"
     t.index ["organization_id", "name"], name: "index_labels_on_organization_id_and_name", unique: true
     t.index ["organization_id"], name: "index_labels_on_organization_id"
   end
@@ -267,8 +269,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["slug"], name: "index_organizations_on_slug", unique: true
   end
 
@@ -279,8 +281,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["segment_id", "stable_context_key"], name: "index_segment_memberships_on_segment_id_and_stable_context_key", unique: true
     t.index ["segment_id"], name: "index_segment_memberships_on_segment_id"
   end
@@ -295,8 +297,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
     t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["context_kind_id"], name: "index_segments_on_context_kind_id"
     t.index ["organization_id", "key"], name: "index_segments_on_organization_id_and_key", unique: true
     t.index ["organization_id"], name: "index_segments_on_organization_id"
@@ -318,6 +320,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "updated_at", null: false
     t.uuid "created_by_id"
     t.uuid "updated_by_id"
+    t.uuid "deleted_by_id"
     t.index ["resource_type", "resource_id", "kind"], name: "index_tokens_on_resource_type_and_resource_id_and_kind"
     t.index ["resource_type", "resource_id"], name: "index_tokens_on_resource"
     t.index ["rotated_from_id"], name: "index_tokens_on_rotated_from_id"
@@ -331,10 +334,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.text "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "created_by_id", null: false
-    t.uuid "updated_by_id", null: false
-    t.datetime "deleted_at"
-    t.uuid "deleted_by_id"
     t.index ["user_id"], name: "index_user_sessions_on_user_id"
   end
 
@@ -346,6 +345,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.datetime "reset_password_sent_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "deleted_by_id"
+    t.datetime "deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
@@ -353,6 +354,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
   add_foreign_key "application_sdk_keys", "environments", on_delete: :restrict
   add_foreign_key "application_sdk_keys", "organizations", on_delete: :cascade
   add_foreign_key "application_sdk_keys", "users", column: "created_by_id", on_delete: :restrict
+  add_foreign_key "application_sdk_keys", "users", column: "deleted_by_id", on_delete: :restrict
   add_foreign_key "application_sdk_keys", "users", column: "updated_by_id", on_delete: :restrict
   add_foreign_key "applications", "flag_sets", column: "default_flag_set_id", on_delete: :nullify
   add_foreign_key "applications", "organizations", on_delete: :restrict
@@ -418,6 +420,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
   add_foreign_key "label_memberships", "users", column: "created_by_id", on_delete: :restrict
   add_foreign_key "labels", "organizations", on_delete: :cascade
   add_foreign_key "labels", "users", column: "created_by_id", on_delete: :restrict
+  add_foreign_key "labels", "users", column: "deleted_by_id", on_delete: :restrict
   add_foreign_key "labels", "users", column: "updated_by_id", on_delete: :restrict
   add_foreign_key "organizations", "users", column: "created_by_id", on_delete: :restrict
   add_foreign_key "organizations", "users", column: "deleted_by_id", on_delete: :restrict
@@ -433,9 +436,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
   add_foreign_key "segments", "users", column: "updated_by_id", on_delete: :restrict
   add_foreign_key "tokens", "tokens", column: "rotated_from_id"
   add_foreign_key "tokens", "users", column: "created_by_id", on_delete: :cascade
+  add_foreign_key "tokens", "users", column: "deleted_by_id", on_delete: :cascade
   add_foreign_key "tokens", "users", column: "updated_by_id", on_delete: :cascade
   add_foreign_key "user_sessions", "users"
-  add_foreign_key "user_sessions", "users", column: "created_by_id", on_delete: :restrict
-  add_foreign_key "user_sessions", "users", column: "deleted_by_id", on_delete: :restrict
-  add_foreign_key "user_sessions", "users", column: "updated_by_id", on_delete: :restrict
+  add_foreign_key "users", "users", column: "deleted_by_id", on_delete: :restrict
 end

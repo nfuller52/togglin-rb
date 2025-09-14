@@ -7,7 +7,7 @@ module Migrations
                    null: false,
                    index: false,
                    on_delete: :restrict,
-                   only: [:created_by, :updated_by])
+                   only: [:created_by, :updated_by, :deleted_by])
       if only.include?(:created_by)
         references :created_by,
                    type: type,
@@ -20,6 +20,14 @@ module Migrations
         references :updated_by,
                    type: type,
                    null: null,
+                   index: index,
+                   foreign_key: { to_table: to_table, on_delete: on_delete }
+      end
+
+      if only.include?(:deleted_by)
+        references :deleted_by,
+                   type: type,
+                   null: true,
                    index: index,
                    foreign_key: { to_table: to_table, on_delete: on_delete }
       end

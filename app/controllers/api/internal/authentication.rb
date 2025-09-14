@@ -27,7 +27,7 @@ module Api
       end
 
       def resume_session
-        Current.session ||= find_session_by_cookie
+        Current.user_session ||= find_session_by_cookie
       end
 
       def find_session_by_cookie
@@ -45,7 +45,7 @@ module Api
       end
 
       def start_new_session_for(user)
-        user.user_sessions.create!(user_agent: request.user_agent, ip_addresss: request.remote_ip).tap do |session|
+        user.user_sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip).tap do |session|
           Current.user_session = session
           cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
         end

@@ -7,6 +7,8 @@ class CreateUsers < ActiveRecord::Migration[8.0]
       t.datetime :confirmation_sent_at
       t.datetime :reset_password_sent_at
       t.timestamps
+      t.trackables(only: [:deleted_by])
+      t.soft_delete
     end
 
     add_index :users, :email, unique: true
