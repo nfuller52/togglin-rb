@@ -21,6 +21,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
   create_enum "enum_flag_dependency_edge_kinds", ["requires", "enables", "conflicts"]
   create_enum "enum_flag_kinds", ["boolean", "multivariate"]
   create_enum "enum_flag_set_purpose", ["runtime", "build", "test"]
+  create_enum "enum_organization_membership_roles", ["member", "owner"]
   create_enum "enum_token_kind", ["session", "personal_access_token", "access_token", "refresh", "password_reset", "email_confirmation", "magic_link_login", "email_change", "invite", "mfa_challenge", "environment_access"]
 
   create_table "application_sdk_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -262,6 +263,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
     t.index ["organization_id"], name: "index_labels_on_organization_id"
   end
 
+  create_table "organization_memberships", primary_key: ["organization_id", "user_id"], force: :cascade do |t|
+    t.uuid "organization_id", null: false
+    t.uuid "user_id", null: false
+    t.enum "role", default: "member", null: false, enum_type: "enum_organization_membership_roles"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "created_by_id", null: false
+    t.uuid "updated_by_id", null: false
+    t.index ["organization_id", "user_id"], name: "index_organization_memberships_on_organization_id_and_user_id", unique: true
+    t.index ["organization_id"], name: "index_organization_memberships_on_organization_id"
+    t.index ["user_id"], name: "index_organization_memberships_on_user_id"
+  end
+
   create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "name", null: false
     t.text "slug", null: false
@@ -422,6 +436,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
   add_foreign_key "labels", "users", column: "created_by_id", on_delete: :restrict
   add_foreign_key "labels", "users", column: "deleted_by_id", on_delete: :restrict
   add_foreign_key "labels", "users", column: "updated_by_id", on_delete: :restrict
+  add_foreign_key "organization_memberships", "organizations", on_delete: :cascade
+  add_foreign_key "organization_memberships", "users", column: "created_by_id", on_delete: :restrict
+  add_foreign_key "organization_memberships", "users", column: "updated_by_id", on_delete: :restrict
+  add_foreign_key "organization_memberships", "users", on_delete: :cascade
   add_foreign_key "organizations", "users", column: "created_by_id", on_delete: :restrict
   add_foreign_key "organizations", "users", column: "deleted_by_id", on_delete: :restrict
   add_foreign_key "organizations", "users", column: "updated_by_id", on_delete: :restrict

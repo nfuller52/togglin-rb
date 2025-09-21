@@ -15,7 +15,7 @@ module Api
       def create
         if user = User.authenticate_by(session_params)
           session = start_new_session_for(user)
-          render_json(Serialize.one(session))
+          render_json(Serialize.one(session, methods: [:organizations]))
         else
           render_json_error(message: "Invalid email or password", status: :unauthorized)
         end

@@ -37,7 +37,7 @@ module Api
       def request_authentication
         session[:return_to_after_authenticating] = request.url
         # TODO: update this path for react
-        redirect_to new_session_path
+        render_json_error(message: "Authentication required", status: :unauthorized)
       end
 
       def after_authentication_url

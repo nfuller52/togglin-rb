@@ -30,6 +30,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  has_many :organization_memberships, dependent: :destroy
+  has_many :organizations, through: :organization_memberships
   has_many :user_sessions, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true

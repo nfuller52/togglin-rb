@@ -25,4 +25,25 @@
 #  fk_rails_...  (updated_by_id => users.id) ON DELETE => restrict
 #
 class Organization < ApplicationRecord
+  include Trackable
+
+  SERIALIZER_PROFILES = {
+    default: %i[id name slug created_at updated_at]
+  }
+
+  SLUG_REGEX = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/
+
+  has_many :organization_memberships, dependent: :destroy
+  has_many :users, through: :organization_memberships
+
+  validates :name, presence: true, length: { maximum: 200 }
+  validates :slug,
+            presence: true,
+            length: { maximum: 100 },
+            format: { with: SLUG_REGEX, message: "must be lowercase letters, numbers, and hyphens" },
+            uniqueness: { case_sensitive: false }
+
+  def onboard(owner:)
+    organization_memberships.create(user: owner, role: :owner)
+  end
 end
