@@ -8,10 +8,9 @@ module Api
       end
 
       def create
-        params = create_organization_params
+        org = Organization.onboard(**create_organization_params, owner: Current.user)
 
-        org = Organization.new({ **params, slug: params[:name].parameterize })
-        if org.onboard(owner: Current.user)
+        if org.persisted?
           render_json Serialize.one(org), status: :created
         else
           render_json_error(message: "validations", data: org.errors, status: :unprocessable_entity)

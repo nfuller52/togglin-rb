@@ -278,14 +278,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_135858) do
 
   create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "name", null: false
-    t.text "slug", null: false
+    t.text "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "created_by_id", null: false
     t.uuid "updated_by_id", null: false
     t.uuid "deleted_by_id"
     t.datetime "deleted_at"
-    t.index ["slug"], name: "index_organizations_on_slug", unique: true
   end
 
   create_table "segment_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

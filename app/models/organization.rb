@@ -7,16 +7,12 @@
 #  id            :uuid             not null, primary key
 #  deleted_at    :datetime
 #  name          :text             not null
-#  slug          :text             not null
+#  slug          :text
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  created_by_id :uuid             not null
 #  deleted_by_id :uuid
 #  updated_by_id :uuid             not null
-#
-# Indexes
-#
-#  index_organizations_on_slug  (slug) UNIQUE
 #
 # Foreign Keys
 #
@@ -43,7 +39,17 @@ class Organization < ApplicationRecord
             format: { with: SLUG_REGEX, message: "must be lowercase letters, numbers, and hyphens" },
             uniqueness: { case_sensitive: false }
 
-  def onboard(owner:)
-    organization_memberships.create(user: owner, role: :owner)
+  class << self
+    def onboard(name:, owner:)
+      transaction do
+        org = new({ name: name, slug: name.parameterize })
+
+        if org.save
+          org.organization_memberships.create({ user: owner, role: :owner})
+        end
+
+        org
+      end
+    end
   end
 end
