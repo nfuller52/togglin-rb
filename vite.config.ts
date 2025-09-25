@@ -6,5 +6,11 @@ import checker from 'vite-plugin-checker'
 import svgr from 'vite-plugin-svgr'
 
 export default defineConfig({
-  plugins: [RubyPlugin(), react(), tsconfigPaths(), svgr(), checker({ typescript: true })],
+  plugins: [
+    RubyPlugin(),
+    react({ babel: { plugins: ['babel-plugin-react-compiler'] } }),
+    tsconfigPaths(),
+    svgr(),
+    checker({ typescript: true }),
+  ],
 })

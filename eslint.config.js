@@ -11,36 +11,21 @@ import pluginRouter from '@tanstack/eslint-plugin-router'
 import eslintConfigPrettier from 'eslint-config-prettier/flat'
 
 export default [
-  // Keep noise down; do NOT ignore app/frontend
   {
     ignores: ['**/node_modules/**', '**/dist/**', 'tmp/**', 'log/**', 'public/**', 'coverage/**'],
     linterOptions: { reportUnusedDisableDirectives: true },
   },
-
-  // Base JavaScript recommendations
   js.configs.recommended,
-
-  // TypeScript (fast, non-type-checked). These are arrays of configs, so spread them in.
   ...tseslint.configs.recommended,
-
-  // React + JSX runtime (flat configs are plain objects; include them directly)
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
-
-  // A11y
   jsxA11y.flatConfigs.recommended,
-
-  // Import rules (core + TS flavor)
   importPlugin.flatConfigs.recommended,
   importPlugin.flatConfigs.typescript,
-
-  // TanStack plugins (these export arrays)
   ...pluginQuery.configs['flat/recommended'],
   ...pluginRouter.configs['flat/recommended'],
-
-  // Project-specific scoping and house rules for your frontend
   {
-    files: ['app/frontend/**/*.{ts,tsx}'],
+    files: ['vite.config.ts', 'app/frontend/**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2024,
       sourceType: 'module',
@@ -48,25 +33,22 @@ export default [
     },
     settings: {
       react: { version: 'detect' },
-      // TS resolver for eslint-plugin-import
       'import/resolver': {
         typescript: { project: true, alwaysTryTypes: true },
       },
     },
-    plugins: { 'unused-imports': unusedImports },
+    plugins: { 'unused-imports': unusedImports, 'react-hooks': reactHooks },
     rules: {
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
-
-      // Unused imports cleanup
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
       'unused-imports/no-unused-imports': 'error',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
-
-      // Import ordering (auto-fixable)
       'import/order': [
         'error',
         {
@@ -88,7 +70,5 @@ export default [
       ],
     },
   },
-
-  // Turn off rules that conflict with Prettier (must be last)
   eslintConfigPrettier,
 ]
