@@ -34,10 +34,13 @@ export default [
     settings: {
       react: { version: 'detect' },
       'import/resolver': {
-        typescript: { project: true, alwaysTryTypes: true },
+        typescript: { project: ['tsconfig.json'], alwaysTryTypes: true },
       },
     },
-    plugins: { 'unused-imports': unusedImports, 'react-hooks': reactHooks },
+    plugins: {
+      'unused-imports': unusedImports,
+      'react-hooks': reactHooks,
+    },
     rules: {
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',

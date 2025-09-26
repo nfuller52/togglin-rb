@@ -1,15 +1,25 @@
-import { defineConfig } from 'vite'
-import RubyPlugin from 'vite-plugin-ruby'
+import path from 'node:path'
+
+import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import react from '@vitejs/plugin-react'
-import tsconfigPaths from 'vite-tsconfig-paths'
+import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
+import RubyPlugin from 'vite-plugin-ruby'
 import svgr from 'vite-plugin-svgr'
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'app/frontend/src'),
+    },
+  },
   plugins: [
     RubyPlugin(),
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
+    }),
     react({ babel: { plugins: ['babel-plugin-react-compiler'] } }),
-    tsconfigPaths(),
     svgr(),
     checker({ typescript: true }),
   ],
