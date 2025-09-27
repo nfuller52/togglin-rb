@@ -20,4 +20,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "pages#home"
+  get "*path", to: "pages#home", constraints: ->(request) do
+    !request.xhr? && request.format.html?
+  end
 end

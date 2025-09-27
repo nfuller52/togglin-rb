@@ -1,17 +1,11 @@
-import { Link, Outlet, createRootRoute } from '@tanstack/react-router'
+import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 
-function RootLayout() {
-  return (
-    <>
-      <Link to="/" className="[&.active]:font-bold">
-        Home
-      </Link>
-      <Link to="/about" className="[&.active]:font-bold">
-        About
-      </Link>
-      <Outlet />
-    </>
-  )
+export interface RouterContext {
+  auth: { isAuthenticated: boolean }
 }
 
-export const Route = createRootRoute({ component: RootLayout })
+function RootLayout() {
+  return <Outlet />
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({ component: RootLayout })
