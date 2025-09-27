@@ -1,5 +1,4 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
-
 import type { ReactNode } from 'react'
 
 interface PublicLayoutProps {
