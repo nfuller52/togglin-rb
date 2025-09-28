@@ -10,6 +10,8 @@ gem "oj"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "rails", "~> 8.0.2", ">= 8.0.2.1"
+gem "rswag-api"
+gem "rswag-ui"
 gem "solid_cable"
 gem "solid_cache"
 gem "solid_queue"
@@ -22,6 +24,7 @@ group :development, :test do
   gem "rails_best_practices"
   gem "reek"
   gem "rspec-rails", "~> 8.0"
+  gem "rswag-specs"
   gem "rubocop-rails-omakase", require: false
   gem "rubocop-rspec", require: false
 end

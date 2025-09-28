@@ -12,7 +12,7 @@ const queryClient = new QueryClient()
 
 function RootLayout() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="dark">
       <QueryClientProvider client={queryClient}>
         <HeadContent />
         <Outlet />
