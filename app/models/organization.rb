@@ -45,7 +45,7 @@ class Organization < ApplicationRecord
         org = new({ name: name, slug: name.parameterize })
 
         if org.save
-          org.organization_memberships.create({ user: owner, role: :owner})
+          org.organization_memberships.create({ user: owner, role: :owner })
         end
 
         org

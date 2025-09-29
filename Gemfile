@@ -21,6 +21,7 @@ gem "vite_rails"
 group :development, :test do
   gem "bullet"
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
+  gem "factory_bot_rails"
   gem "rails_best_practices"
   gem "reek"
   gem "rspec-rails", "~> 8.0"

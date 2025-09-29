@@ -51,6 +51,7 @@ class Serialize
         next unless resource.respond_to?(m)
         key = camelize_key(m)
         result[key] = traverse_nested_value(resource.public_send(m))
+        print("\n\n\n#{result[key]}\n\n\n")
       end
     when :hash
       fields.each do |field|
@@ -129,6 +130,10 @@ class Serialize
       end
 
       result
+    when ActiveRecord::Associations::CollectionProxy, ActiveRecord::Relation
+      self.class.many(value)
+    when ActiveRecord::Base
+      self.class.one(value)
     when Array
       value.map { |v| traverse_nested_value(v) }
     when Time, DateTime, Date
