@@ -16,6 +16,8 @@ describe 'Session API' do
 
 
       response '201', 'session created' do
+        before { create(:user, email: email, password: password) }
+
         let(:email) { 'test@example.com' }
         let(:password) { 'Password1!' }
 
