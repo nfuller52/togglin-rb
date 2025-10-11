@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: user_sessions
@@ -20,7 +22,7 @@
 class UserSession < ApplicationRecord
   SERIALIZER_PROFILES = {
     default: %i[id]
-  }
+  }.freeze
 
   belongs_to :user
   has_many :organizations, through: :user

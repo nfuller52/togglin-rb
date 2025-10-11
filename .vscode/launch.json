@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "rdbg",
+      "name": "Debug current file with rdbg",
+      "request": "launch",
+      "script": "${file}",
+      "args": [],
+      "askParameters": true
+    },
+    {
+      "type": "rdbg",
+      "name": "Attach with rdbg",
+      "request": "attach"
+    },
+    {
+      "type": "rdbg",
+      "name": "RSpec current line with rdbg",
+      "request": "launch",
+      "useBundler": true,
+      "script": "./bin/rspec",
+      "args": ["${file}:${lineNumber}"]
+    }
+  ]
+}

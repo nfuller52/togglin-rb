@@ -1,7 +1,7 @@
 {
+  "editor.formatOnSave": true,
   "[ruby]": {
-    "editor.defaultFormatter": "rubocop.vscode-rubocop",
-    "editor.formatOnSave": true
+    "editor.defaultFormatter": "Shopify.ruby-lsp"
   },
   "rubocop.autocorrect": true,
   "workbench.colorCustomizations": {

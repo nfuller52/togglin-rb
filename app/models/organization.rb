@@ -14,6 +14,10 @@
 #  deleted_by_id :uuid
 #  updated_by_id :uuid             not null
 #
+# Indexes
+#
+#  index_organizations_on_slug  (slug) UNIQUE
+#
 # Foreign Keys
 #
 #  fk_rails_...  (created_by_id => users.id) ON DELETE => restrict
@@ -25,7 +29,7 @@ class Organization < ApplicationRecord
 
   SERIALIZER_PROFILES = {
     default: %i[id name slug created_at updated_at]
-  }
+  }.freeze
 
   SLUG_REGEX = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/
 
@@ -36,7 +40,7 @@ class Organization < ApplicationRecord
   validates :slug,
             presence: true,
             length: { maximum: 100 },
-            format: { with: SLUG_REGEX, message: "must be lowercase letters, numbers, and hyphens" },
+            format: { with: SLUG_REGEX, message: 'must be lowercase letters, numbers, and hyphens' },
             uniqueness: { case_sensitive: false }
 
   class << self
@@ -44,9 +48,7 @@ class Organization < ApplicationRecord
       transaction do
         org = new({ name: name, slug: name.parameterize })
 
-        if org.save
-          org.organization_memberships.create({ user: owner, role: :owner })
-        end
+        org.organization_memberships.create({ user: owner, role: :owner }) if org.save
 
         org
       end

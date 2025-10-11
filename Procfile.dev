@@ -1,0 +1,4 @@
+
+db: docker compose up
+web: RUBY_DEBUG_OPEN=true bin/rails server
+vite: bin/vite dev

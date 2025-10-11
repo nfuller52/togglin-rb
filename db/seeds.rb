@@ -10,8 +10,8 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-SEED_USER_PW = "Password1!"
-SEED_USERS = ["test@example.com", "user@example.com", "admin@example.com"]
+SEED_USER_PW = 'Password1!'
+SEED_USERS = ['test@example.com', 'user@example.com', 'admin@example.com'].freeze
 
 SEED_USERS.each do |email|
   User.find_or_create_by!(email: email) do |user|

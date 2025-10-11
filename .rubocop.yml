@@ -1,10 +1,22 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
-
 plugins:
+  - rubocop-factory_bot
+  - rubocop-rails
+  - rubocop-performance
   - rubocop-rspec
+  - rubocop-rspec_rails
 
-# Application Cops
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'db/queue_schema.rb'
+    - 'bin/*'
+    - 'config/environments/*'
+    - 'config/initializers/migrations/trackables.rb'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+
+# * Application Cops
 Layout/LineLength:
   Enabled: true
   Max: 118
@@ -24,7 +36,10 @@ Layout/ParameterAlignment:
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false
 
-# RSpec Cops
+Style/Documentation:
+  Enabled: false
+
+# * RSpec Cops
 RSpec/IncludeExamples:
   Enabled: true
 

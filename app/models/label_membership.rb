@@ -34,6 +34,6 @@ class LabelMembership < ApplicationRecord
 
     return unless member.organization_id != label.organization_id
 
-    errors.add(:member, "must belong to the same organization as the label")
+    errors.add(:member, 'must belong to the same organization as the label')
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -26,7 +28,7 @@ class User < ApplicationRecord
 
   SERIALIZER_PROFILES = {
     default: %i[id email created_at updated_at]
-  }
+  }.freeze
 
   has_secure_password
 

@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
-require "oj"
+require 'oj'
 
 class Serialize
   class << self
     def one(record, json: false, **opts)
       return nil unless record
+
       result = new(opts).one(record)
       json ? Oj.dump(result, mode: :compat) : result
     end
 
     def many(records, json: false, **opts)
       return nil unless records
+
       result = new(opts).many(records)
       json ? Oj.dump(result, mode: :compat) : result
     end
@@ -30,7 +32,7 @@ class Serialize
     type = resource_type(resource)
     fields = resolve_fields(resource, type)
 
-    if @except && !@except.empty?
+    if @except.present?
       exclusions = explicit_fields_list(@except)
       fields = fields.reject { |f| exclusions.include?(f) }
     end
@@ -49,9 +51,10 @@ class Serialize
 
       Array(@methods).each do |m|
         next unless resource.respond_to?(m)
+
         key = camelize_key(m)
         result[key] = traverse_nested_value(resource.public_send(m))
-        print("\n\n\n#{result[key]}\n\n\n")
+        Rails.logger.debug("\n\n\n#{result[key]}\n\n\n")
       end
     when :hash
       fields.each do |field|
@@ -65,7 +68,8 @@ class Serialize
   end
 
   def many(resources)
-    raise ArgumentError, "Enumerable required for Serialize.many" unless resources.is_a?(Enumerable)
+    raise ArgumentError, 'Enumerable required for Serialize.many' unless resources.is_a?(Enumerable)
+
     resources.map { |resource| one(resource) }
   end
 
@@ -74,7 +78,7 @@ class Serialize
   def resource_type(resource)
     if resource.is_a?(Hash)
       :hash
-    elsif resource.class.ancestors.map(&:name).include?("ApplicationRecord")
+    elsif resource.class.ancestors.map(&:name).include?('ApplicationRecord')
       :active_record
     else
       :other
@@ -82,10 +86,14 @@ class Serialize
   end
 
   def resolve_fields(resource, type)
-    return explicit_fields_list(@only) if @only && !@only.empty?
+    return explicit_fields_list(@only) if @only.present?
 
     if type == :active_record
-      profiles = resource.class.const_get(:SERIALIZER_PROFILES) rescue nil
+      profiles = begin
+        resource.class.const_get(:SERIALIZER_PROFILES)
+      rescue StandardError
+        nil
+      end
 
       if profiles
         if @profile && profiles[@profile]
@@ -106,7 +114,7 @@ class Serialize
   def explicit_fields_list(list)
     Array(list).compact.map do |k|
       s = k.to_s.strip
-      s = s.delete_suffix(",")
+      s = s.delete_suffix(',')
       s.to_sym
     end
   end
@@ -139,7 +147,7 @@ class Serialize
     when Time, DateTime, Date
       value.iso8601
     else
-      if value.respond_to?(:iso8601) && value.class.name&.include?("ActiveSupport::TimeWithZone")
+      if value.respond_to?(:iso8601) && value.class.name&.include?('ActiveSupport::TimeWithZone')
         value.iso8601
       else
         value

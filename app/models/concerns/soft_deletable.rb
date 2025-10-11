@@ -8,15 +8,11 @@ module SoftDeletable
       alias_method :original_delete_all, :delete_all
 
       def delete_all(conditions = nil)
-        where(conditions).update_all(deleted_at: Time.current)
+        where(conditions).update_all(deleted_at: Time.current) # rubocop:disable Rails/SkipsModelValidations
       end
 
       def delete_all!(conditions = nil)
-        if conditions
-          where(conditions).delete_all!
-        else
-          original_delete_all
-        end
+        conditions ? where(conditions).delete_all! : original_delete_all
       end
 
       relation_klass = const_defined?(:ActiveRecord_Relation) ? const_get(:ActiveRecord_Relation) : ActiveRecord::Relation
@@ -24,7 +20,7 @@ module SoftDeletable
         alias_method :original_delete_all, :delete_all
 
         def delete_all(conditions = nil)
-          where(conditions).update_all(deleted_at: Time.current)
+          where(conditions).update_all(deleted_at: Time.current) # rubocop:disable Rails/SkipsModelValidations
         end
 
         def delete_all!(conditions = nil)
@@ -47,7 +43,7 @@ module SoftDeletable
 
     with_transaction_returning_status do
       run_callbacks(:destroy) do
-        update_attribute(:deleted_at, Time.current)
+        update_attribute(:deleted_at, Time.current) # rubocop:disable Rails/SkipsModelValidations
         self
       end
     end
@@ -56,7 +52,7 @@ module SoftDeletable
   def destroy!
     with_transaction_returning_status do
       run_callbacks(:destroy) do
-        self.class.delete_all!(self.class.primary_key => self.id)
+        self.class.delete_all!(self.class.primary_key => id)
         self
       end
     end
@@ -66,7 +62,7 @@ module SoftDeletable
     return self unless deleted?
 
     self.class.transaction do
-      update_attribute(:deleted_at, nil)
+      update_attribute(:deleted_at, nil) # rubocop:disable Rails/SkipsModelValidations
       self
     end
   end

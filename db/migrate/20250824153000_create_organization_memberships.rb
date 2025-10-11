@@ -12,7 +12,7 @@ class CreateOrganizationMemberships < ActiveRecord::Migration[8.0]
 
       t.enum :role, enum_type: :enum_organization_membership_roles, null: false, default: 'member'
       t.timestamps
-      t.trackables only: [:created_by, :updated_by]
+      t.trackables only: %i[created_by updated_by]
     end
 
     add_index :organization_memberships, %i[organization_id user_id], unique: true

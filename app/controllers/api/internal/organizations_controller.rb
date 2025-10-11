@@ -13,7 +13,7 @@ module Api
         if org.persisted?
           render_json Serialize.one(org), status: :created
         else
-          render_json_error(message: "validations", data: org.errors, status: :unprocessable_entity)
+          render_json_error(message: 'validations', data: org.errors, status: :unprocessable_entity)
         end
       end
 

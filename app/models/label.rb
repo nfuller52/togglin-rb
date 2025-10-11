@@ -37,6 +37,6 @@ class Label < ApplicationRecord
   validates :color, presence: true,
                     format: {
                       with: /\A#(?:\h{3}|\h{6})\z/,
-                      message: "must be a valid hex color code"
+                      message: 'must be a valid hex color code'
                     }
 end

@@ -4,9 +4,9 @@ module Trackable
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :created_by, class_name: "User", optional: true
-    belongs_to :updated_by, class_name: "User", optional: true
-    belongs_to :deleted_by, class_name: "User", optional: true
+    belongs_to :created_by, class_name: 'User', optional: true
+    belongs_to :updated_by, class_name: 'User', optional: true
+    belongs_to :deleted_by, class_name: 'User', optional: true
 
     before_validation :set_trackable_fields
 
@@ -15,9 +15,9 @@ module Trackable
   end
 
   def set_trackable_fields
-    if Current.user
-      self.created_by_id ||= Current.user.id
-      self.updated_by_id = Current.user.id
-    end
+    return unless Current.user
+
+    self.created_by_id ||= Current.user.id
+    self.updated_by_id = Current.user.id
   end
 end

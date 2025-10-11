@@ -13,19 +13,17 @@ module Api
       )
 
       def create
-        print(params)
-
-        if user = User.authenticate_by(session_params)
+        if (user = User.authenticate_by(session_params))
           session = start_new_session_for(user)
           render_json(Serialize.one(session, methods: [:organizations]), status: :created)
         else
-          render_json_error(message: "Invalid email or password", status: :unauthorized)
+          render_json_error(message: 'Invalid email or password', status: :unauthorized)
         end
       end
 
       def destroy
         terminate_session
-        render_json({ message: "Logged out successfully" }, status: :ok)
+        render_json({ message: 'Logged out successfully' }, status: :ok)
       end
 
       def show
@@ -34,7 +32,7 @@ module Api
         if user
           render_json(Serialize.one(user))
         else
-          render_json_error(message: "Internal server error", status: :error)
+          render_json_error(message: 'Internal server error', status: :error)
         end
       end
 

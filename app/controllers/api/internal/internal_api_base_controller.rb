@@ -3,7 +3,7 @@
 module Api
   module Internal
     class InternalApiBaseController < ApplicationController
-      include Api::Internal::Authentication
+      include Api::Internal::Concerns::Authentication
       include Api::Internal::Responses
 
       layout false

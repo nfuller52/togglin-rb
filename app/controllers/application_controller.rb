@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_csrf_cookie
-    cookies["X-CSRF-Token"] = {
+    cookies['X-CSRF-Token'] = {
       value: form_authenticity_token,
       secure: Rails.env.production?,
       same_site: :lax,

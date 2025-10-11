@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTokens < ActiveRecord::Migration[8.0]
   def change
     create_enum :enum_token_kind, %w[
@@ -30,8 +32,8 @@ class CreateTokens < ActiveRecord::Migration[8.0]
     end
 
     add_index :tokens, :token_digest, unique: true
-    add_index :tokens, [:resource_type, :resource_id, :kind]
+    add_index :tokens, %i[resource_type resource_id kind]
 
-    add_check_constraint :tokens, "char_length(token_prefix) = 6"
+    add_check_constraint :tokens, 'char_length(token_prefix) = 6'
   end
 end

@@ -1,36 +1,38 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "bcrypt", "~> 3.1.7"
-gem "bootsnap", require: false
-gem "kamal", require: false
-gem "name_of_person"
-gem "oj"
-gem "pg", "~> 1.6"
-gem "puma", ">= 5.0"
-gem "rails", "~> 8.0.3"
-gem "rswag-api"
-gem "rswag-ui"
-gem "solid_cable"
-gem "solid_cache"
-gem "solid_queue"
-gem "thruster", require: false
-gem "vite_rails"
+gem 'bcrypt', '~> 3.1.7'
+gem 'bootsnap', require: false
+gem 'kamal', require: false
+gem 'name_of_person'
+gem 'oj'
+gem 'pg', '~> 1.6'
+gem 'puma', '>= 5.0'
+gem 'rails', '~> 8.0.3'
+gem 'rswag-api'
+gem 'rswag-ui'
+gem 'solid_cable'
+gem 'solid_cache'
+gem 'solid_queue'
+gem 'thruster', require: false
+gem 'vite_rails'
 
 group :development, :test do
-  gem "bullet"
-  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
-  gem "factory_bot_rails"
-  gem "rails_best_practices"
-  gem "reek"
-  gem "rspec-rails", "~> 8.0"
-  gem "rswag-specs"
-  gem "rubocop-rails-omakase", require: false
-  gem "rubocop-rspec", require: false
+  gem 'bullet'
+  gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
+  gem 'factory_bot_rails'
+  gem 'rails_best_practices'
+  gem 'reek'
+  gem 'rspec-rails', '~> 8.0'
+  gem 'rswag-specs'
+  gem 'rubocop-factory_bot', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec_rails', require: false
 end
 
 group :development do
-  gem "annotaterb"
-  gem "web-console"
+  gem 'annotaterb'
+  gem 'web-console'
 end

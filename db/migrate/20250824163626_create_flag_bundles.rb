@@ -7,10 +7,10 @@ class CreateFlagBundles < ActiveRecord::Migration[8.0]
                                   foreign_key: { on_delete: :restrict },
                                   index: true
       t.references :environment, type: :uuid, null: false,
-        foreign_key: { on_delete: :restrict },
+                                 foreign_key: { on_delete: :restrict },
                                  index: true
       t.references :flag_set, type: :uuid, null: true,
-      foreign_key: { on_delete: :restrict },
+                              foreign_key: { on_delete: :restrict },
                               index: true
       t.integer :version, null: false
       t.jsonb :bundle, null: false

@@ -9,5 +9,7 @@ class CreateOrganizations < ActiveRecord::Migration[8.0]
       t.trackables
       t.soft_delete
     end
+
+    add_index :organizations, :slug, unique: true
   end
 end
