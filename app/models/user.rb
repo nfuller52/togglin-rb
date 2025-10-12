@@ -27,7 +27,12 @@ class User < ApplicationRecord
   include SoftDeletable
 
   SERIALIZER_PROFILES = {
-    default: %i[id email created_at updated_at]
+    default: {
+      id: :string,
+      email: :string,
+      created_at: :datetime,
+      updated_at: :datetime
+    }
   }.freeze
 
   has_secure_password

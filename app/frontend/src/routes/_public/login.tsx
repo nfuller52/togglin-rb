@@ -12,8 +12,21 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useLoginMutation } from '@/modules/auth'
 
 function Login() {
+  const { mutate } = useLoginMutation()
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const formData = e.currentTarget
+    const email = formData.elements.namedItem('email')?.value as string
+    const password = formData.elements.namedItem('password')?.value as string
+
+    mutate({ email, password })
+  }
+
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -24,25 +37,29 @@ function Login() {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="m@example.com" required />
+              <Input id="email" type="email" placeholder="me@example.com" required />
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
-                <a
-                  href="#"
-                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                <button
+                  type="button"
+                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline bg-transparent p-0 border-none text-blue-600 cursor-pointer"
+                  onClick={() => {
+                    // TODO: handle forgot password action
+                  }}
                 >
                   Forgot your password?
-                </a>
+                </button>
               </div>
               <Input id="password" type="password" required />
             </div>
           </div>
+          <button type="submit">Basic</button>
         </form>
       </CardContent>
       <CardFooter className="flex-col gap-2">

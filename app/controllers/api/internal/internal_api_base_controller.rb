@@ -4,7 +4,7 @@ module Api
   module Internal
     class InternalApiBaseController < ApplicationController
       include Api::Internal::Concerns::Authentication
-      include Api::Internal::Responses
+      include Api::Internal::Concerns::Responses
 
       layout false
       protect_from_forgery with: :exception

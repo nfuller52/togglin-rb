@@ -20,9 +20,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class UserSession < ApplicationRecord
-  SERIALIZER_PROFILES = {
-    default: %i[id]
-  }.freeze
+  SERIALIZER_PROFILES = { default: { id: :string } }.freeze
 
   belongs_to :user
   has_many :organizations, through: :user

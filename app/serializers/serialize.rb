@@ -54,7 +54,6 @@ class Serialize
 
         key = camelize_key(m)
         result[key] = traverse_nested_value(resource.public_send(m))
-        Rails.logger.debug("\n\n\n#{result[key]}\n\n\n")
       end
     when :hash
       fields.each do |field|
@@ -97,9 +96,9 @@ class Serialize
 
       if profiles
         if @profile && profiles[@profile]
-          return profiles[@profile].map! { |f| f.is_a?(String) ? f.to_sym : f }
+          return profiles[@profile].keys.map! { |f| f.is_a?(String) ? f.to_sym : f }
         elsif profiles[:default]
-          return profiles[:default].map! { |f| f.is_a?(String) ? f.to_sym : f }
+          return profiles[:default].keys.map! { |f| f.is_a?(String) ? f.to_sym : f }
         end
       end
 

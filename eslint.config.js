@@ -52,6 +52,14 @@ export default [
         'warn',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+          fixStyle: 'separate-type-imports',
+        },
+      ],
+      'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
       'import/order': [
         'error',
         {

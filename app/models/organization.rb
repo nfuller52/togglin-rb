@@ -28,7 +28,13 @@ class Organization < ApplicationRecord
   include Trackable
 
   SERIALIZER_PROFILES = {
-    default: %i[id name slug created_at updated_at]
+    default: {
+      id: :string,
+      name: :string,
+      slug: :string,
+      created_at: :datetime,
+      updated_at: :datetime
+    }
   }.freeze
 
   SLUG_REGEX = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/
