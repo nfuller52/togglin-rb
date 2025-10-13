@@ -1,5 +1,8 @@
 import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router'
 
+import { InternalApiException } from '@/data/api/internal/errors'
+import { getSessionQueryOptions } from '@/modules/auth'
+
 function AuthenticatedRoute() {
   return (
     <>
@@ -15,9 +18,14 @@ function AuthenticatedRoute() {
 }
 
 export const Route = createFileRoute('/_authenticated')({
-  beforeLoad: ({ context, location }) => {
-    if (!context.auth.isAuthenticated) {
-      throw redirect({ to: '/login', search: { redirect: location.href } })
+  beforeLoad: async ({ context, location }) => {
+    try {
+      await context.queryClient.ensureQueryData(getSessionQueryOptions())
+    } catch (err) {
+      if (err instanceof InternalApiException && err.status === 401) {
+        throw redirect({ to: '/login', search: { redirect: location.href } })
+      }
+      throw err
     }
   },
   component: AuthenticatedRoute,
